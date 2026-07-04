@@ -1,6 +1,140 @@
 {
-  "queue": [],
-  "last_updated": null,
+  "queue": [
+    {
+      "part_number": 1,
+      "file_path": "/tmp/cartoon_processing/parts/part_01.mp4",
+      "start_time": 0,
+      "duration": 240,
+      "uploaded": false,
+      "youtube_id": null,
+      "branded_file_path": "/tmp/cartoon_processing/branded/branded_part_01.mp4",
+      "youtube_title": "My Cartoon Show | Episode 1 - Part 1",
+      "youtube_description": "🎬 My Cartoon Show - Episode 1 | Part 1\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📺 شاهد المزيد من حلقات My Cartoon Show على قناتنا!\n🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n#cartoon #animation #my_cartoon_show\n\n\n📋 الحلقة مقسمة إلى 6 أجزاء - تابع الأجزاء الأخرى على القناة!",
+      "youtube_tags": [
+        "كرتون",
+        "cartoon",
+        "anime",
+        "animation",
+        "my_cartoon_show",
+        "episode1"
+      ],
+      "youtube_category": "1",
+      "privacy_status": "public"
+    },
+    {
+      "part_number": 2,
+      "file_path": "/tmp/cartoon_processing/parts/part_02.mp4",
+      "start_time": 240,
+      "duration": 240,
+      "uploaded": false,
+      "youtube_id": null,
+      "branded_file_path": "/tmp/cartoon_processing/branded/branded_part_02.mp4",
+      "youtube_title": "My Cartoon Show | Episode 1 - Part 2",
+      "youtube_description": "🎬 My Cartoon Show - Episode 1 | Part 2\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📺 شاهد المزيد من حلقات My Cartoon Show على قناتنا!\n🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n#cartoon #animation #my_cartoon_show\n\n\n📋 الحلقة مقسمة إلى 6 أجزاء - تابع الأجزاء الأخرى على القناة!",
+      "youtube_tags": [
+        "كرتون",
+        "cartoon",
+        "anime",
+        "animation",
+        "my_cartoon_show",
+        "episode1"
+      ],
+      "youtube_category": "1",
+      "privacy_status": "public"
+    },
+    {
+      "part_number": 3,
+      "file_path": "/tmp/cartoon_processing/parts/part_03.mp4",
+      "start_time": 480,
+      "duration": 240,
+      "uploaded": false,
+      "youtube_id": null,
+      "branded_file_path": "/tmp/cartoon_processing/branded/branded_part_03.mp4",
+      "youtube_title": "My Cartoon Show | Episode 1 - Part 3",
+      "youtube_description": "🎬 My Cartoon Show - Episode 1 | Part 3\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📺 شاهد المزيد من حلقات My Cartoon Show على قناتنا!\n🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n#cartoon #animation #my_cartoon_show\n\n\n📋 الحلقة مقسمة إلى 6 أجزاء - تابع الأجزاء الأخرى على القناة!",
+      "youtube_tags": [
+        "كرتون",
+        "cartoon",
+        "anime",
+        "animation",
+        "my_cartoon_show",
+        "episode1"
+      ],
+      "youtube_category": "1",
+      "privacy_status": "public"
+    },
+    {
+      "part_number": 4,
+      "file_path": "/tmp/cartoon_processing/parts/part_04.mp4",
+      "start_time": 720,
+      "duration": 240,
+      "uploaded": false,
+      "youtube_id": null,
+      "branded_file_path": "/tmp/cartoon_processing/branded/branded_part_04.mp4",
+      "youtube_title": "My Cartoon Show | Episode 1 - Part 4",
+      "youtube_description": "🎬 My Cartoon Show - Episode 1 | Part 4\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📺 شاهد المزيد من حلقات My Cartoon Show على قناتنا!\n🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n#cartoon #animation #my_cartoon_show\n\n\n📋 الحلقة مقسمة إلى 6 أجزاء - تابع الأجزاء الأخرى على القناة!",
+      "youtube_tags": [
+        "كرتون",
+        "cartoon",
+        "anime",
+        "animation",
+        "my_cartoon_show",
+        "episode1"
+      ],
+      "youtube_category": "1",
+      "privacy_status": "public"
+    },
+    {
+      "part_number": 5,
+      "file_path": "/tmp/cartoon_processing/parts/part_05.mp4",
+      "start_time": 960,
+      "duration": 240,
+      "uploaded": false,
+      "youtube_id": null,
+      "branded_file_path": "/tmp/cartoon_processing/branded/branded_part_05.mp4",
+      "youtube_title": "My Cartoon Show | Episode 1 - Part 5",
+      "youtube_description": "🎬 My Cartoon Show - Episode 1 | Part 5\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📺 شاهد المزيد من حلقات My Cartoon Show على قناتنا!\n🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n#cartoon #animation #my_cartoon_show\n\n\n📋 الحلقة مقسمة إلى 6 أجزاء - تابع الأجزاء الأخرى على القناة!",
+      "youtube_tags": [
+        "كرتون",
+        "cartoon",
+        "anime",
+        "animation",
+        "my_cartoon_show",
+        "episode1"
+      ],
+      "youtube_category": "1",
+      "privacy_status": "public"
+    },
+    {
+      "part_number": 6,
+      "file_path": "/tmp/cartoon_processing/parts/part_06.mp4",
+      "start_time": 1200,
+      "duration": 240,
+      "uploaded": false,
+      "youtube_id": null,
+      "branded_file_path": "/tmp/cartoon_processing/branded/branded_part_06.mp4",
+      "youtube_title": "My Cartoon Show | Episode 1 - Part 6",
+      "youtube_description": "🎬 My Cartoon Show - Episode 1 | Part 6\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📺 شاهد المزيد من حلقات My Cartoon Show على قناتنا!\n🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n#cartoon #animation #my_cartoon_show\n\n\n📋 الحلقة مقسمة إلى 6 أجزاء - تابع الأجزاء الأخرى على القناة!",
+      "youtube_tags": [
+        "كرتون",
+        "cartoon",
+        "anime",
+        "animation",
+        "my_cartoon_show",
+        "episode1"
+      ],
+      "youtube_category": "1",
+      "privacy_status": "public"
+    }
+  ],
+  "last_updated": "2026-07-04T01:31:25.274826",
   "total_uploaded": 0,
-  "current_episode": null
+  "current_episode": {
+    "name": "عالم غامبول المدهش الموسم 2 - الحلقة 2 مدبلجة.mp4",
+    "path": "/tmp/cartoon_processing/عالم غامبول المدهش الموسم 2 - الحلقة 2 مدبلجة.mp4",
+    "episode_number": 1,
+    "cartoon_name": "My Cartoon Show",
+    "total_parts": 6
+  },
+  "total_parts": 6
 }
