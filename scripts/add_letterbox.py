@@ -66,9 +66,8 @@ def add_letterbox_to_video(
     part_text    = f"Part {part_number}"
     has_logo     = os.path.exists(logo_path)
 
-    # حساب y للنص العلوي والسفلي
-    top_y    = (bar_h - font_size) // 2
-    bot_y    = bar_h + "ih".replace("ih", "") # placeholder, computed below as expression
+    # حساب y للنص العلوي
+    top_y = (bar_h - font_size) // 2
 
     # بناء filter_complex
     # خطوة 1: pad لإضافة شريطين
