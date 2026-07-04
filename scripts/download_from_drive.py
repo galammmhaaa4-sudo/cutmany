@@ -88,8 +88,19 @@ def download_video(service, file_id: str, file_name: str, dest_dir: str) -> str:
 
 def save_video_info_to_queue(video_name: str, video_path: str, config: dict):
     """يحفظ معلومات الفيديو في ملف الـ queue لاستخدامها لاحقاً."""
-    with open(QUEUE_PATH, "r", encoding="utf-8") as f:
-        queue_data = json.load(f)
+    # التأكد من وجود المجلد
+    QUEUE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    
+    if not QUEUE_PATH.exists():
+        queue_data = {
+            "queue": [],
+            "last_updated": None,
+            "total_uploaded": 0,
+            "current_episode": None
+        }
+    else:
+        with open(QUEUE_PATH, "r", encoding="utf-8") as f:
+            queue_data = json.load(f)
     
     queue_data["current_episode"] = {
         "name": video_name,

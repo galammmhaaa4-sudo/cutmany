@@ -125,12 +125,24 @@ def choose_best_segment_duration(total: float, min_dur: int, max_dur: int) -> in
 
 def update_queue(parts: list, config: dict):
     """يحدّث ملف الـ queue بقائمة المقاطع الجاهزة."""
-    with open(QUEUE_PATH, "r", encoding="utf-8") as f:
-        queue_data = json.load(f)
+    QUEUE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    
+    if not QUEUE_PATH.exists():
+        queue_data = {
+            "queue": [],
+            "last_updated": None,
+            "total_uploaded": 0,
+            "current_episode": {"total_parts": 0}
+        }
+    else:
+        with open(QUEUE_PATH, "r", encoding="utf-8") as f:
+            queue_data = json.load(f)
     
     queue_data["queue"] = parts
     queue_data["last_updated"] = datetime.now().isoformat()
     queue_data["total_parts"] = len(parts)
+    if "current_episode" not in queue_data or not queue_data["current_episode"]:
+        queue_data["current_episode"] = {}
     queue_data["current_episode"]["total_parts"] = len(parts)
     
     with open(QUEUE_PATH, "w", encoding="utf-8") as f:

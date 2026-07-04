@@ -156,7 +156,10 @@ def main():
     config = load_config()
     lb_cfg = config["letterbox"]
     
-    # قراءة قائمة الأجزاء من الـ queue
+    if not QUEUE_PATH.exists():
+        print("❌ ملف queue غير موجود")
+        sys.exit(1)
+        
     with open(QUEUE_PATH, "r", encoding="utf-8") as f:
         queue_data = json.load(f)
     
