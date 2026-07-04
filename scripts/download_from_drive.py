@@ -51,7 +51,7 @@ def find_unprocessed_video(service, folder_id: str) -> dict | None:
     query = (
         f"'{folder_id}' in parents "
         f"and mimeType contains 'video/' "
-        f"and name != '[DONE]' "
+        f"and not name contains '[DONE]' "
         f"and trashed = false"
     )
     results = service.files().list(

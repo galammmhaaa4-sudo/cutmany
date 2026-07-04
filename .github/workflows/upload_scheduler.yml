@@ -51,16 +51,13 @@ jobs:
         if: steps.check_queue.outputs.pending_count != '0'
         run: pip install -r requirements.txt
 
-      # ── 5. تحميل الفيديوهات المعالجة من الـ Artifacts ────────────────────
-      - name: 📂 Download Processed Videos Artifact
+      # ── 5. تحميل الفيديوهات المعالجة عبر GitHub API ─────────────────────
+      - name: 📂 Download Processed Videos via API
         if: steps.check_queue.outputs.pending_count != '0'
-        uses: actions/download-artifact@v4
-        with:
-          # يحمّل أحدث artifact يبدأ بـ processed-videos
-          pattern: processed-videos-*
-          path: /tmp/cartoon_processing/branded/
-          merge-multiple: true
-        continue-on-error: true   # لو لم يجد artifacts، يكمل
+        env:
+          GITHUB_TOKEN:      ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python scripts/download_artifacts.py
 
       # ── 6. رفع الجزء التالي على يوتيوب ───────────────────────────────────
       - name: 📤 Upload Next Part to YouTube
