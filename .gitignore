@@ -1,0 +1,18 @@
+# بيئة بايثون الافتراضية
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ملفات الاعتمادات والأسرار (حماية أمنية ⚠️)
+client_secrets.json
+client_secret_*.json
+*service-account*.json
+*hidden-mapper*.json
+*.json
+
+# مجلدات مؤقتة للمونتاج
+/tmp/
+/temp/
+*.mp4
+queue/upload_queue.json

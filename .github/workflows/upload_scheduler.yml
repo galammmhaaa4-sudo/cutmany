@@ -1,0 +1,88 @@
+name: 📤 Upload Part to YouTube
+
+# يرفع 3 فيديوهات يومياً كحد أقصى
+# الأوقات: 11 صباحاً + 5 مساءً + 11 مساءً (توقيت الرياض)
+on:
+  schedule:
+    - cron: "0 8 * * *"    # 11:00 صباحاً (توقيت الرياض)
+    - cron: "0 14 * * *"   # 05:00 مساءً (توقيت الرياض)
+    - cron: "0 20 * * *"   # 11:00 مساءً (توقيت الرياض)
+  workflow_dispatch:          # تشغيل يدوي للاختبار
+
+jobs:
+  upload-one-part:
+    name: رفع مقطع على يوتيوب
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      # ── 1. استنساخ الـ Repository ─────────────────────────────────────────
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 2. التحقق من وجود أجزاء في قائمة الانتظار ───────────────────────
+      - name: 🔍 Check Queue
+        id: check_queue
+        run: |
+          PENDING=$(python3 -c "
+          import json
+          with open('queue/upload_queue.json') as f:
+              data = json.load(f)
+          pending = [p for p in data.get('queue', []) if not p.get('uploaded')]
+          print(len(pending))
+          ")
+          echo "pending_count=$PENDING" >> $GITHUB_OUTPUT
+          echo "📋 أجزاء في الانتظار: $PENDING"
+
+      # ── 3. تثبيت Python ───────────────────────────────────────────────────
+      - name: 🐍 Setup Python 3.11
+        if: steps.check_queue.outputs.pending_count != '0'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # ── 4. تثبيت المكتبات ─────────────────────────────────────────────────
+      - name: 📦 Install Dependencies
+        if: steps.check_queue.outputs.pending_count != '0'
+        run: pip install -r requirements.txt
+
+      # ── 5. تحميل الفيديوهات المعالجة من الـ Artifacts ────────────────────
+      - name: 📂 Download Processed Videos Artifact
+        if: steps.check_queue.outputs.pending_count != '0'
+        uses: actions/download-artifact@v4
+        with:
+          # يحمّل أحدث artifact يبدأ بـ processed-videos
+          pattern: processed-videos-*
+          path: /tmp/cartoon_processing/branded/
+          merge-multiple: true
+        continue-on-error: true   # لو لم يجد artifacts، يكمل
+
+      # ── 6. رفع الجزء التالي على يوتيوب ───────────────────────────────────
+      - name: 📤 Upload Next Part to YouTube
+        if: steps.check_queue.outputs.pending_count != '0'
+        id: upload
+        env:
+          YOUTUBE_CLIENT_ID:     ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: python scripts/upload_to_youtube.py
+
+      # ── 7. حفظ تحديث الـ queue ────────────────────────────────────────────
+      - name: 💾 Commit Updated Queue
+        if: steps.check_queue.outputs.pending_count != '0'
+        run: |
+          git config --local user.email "bot@cartoon-automation.com"
+          git config --local user.name "Cartoon Bot 🤖"
+          git add queue/upload_queue.json
+          git commit -m "🤖 Uploaded Part to YouTube: $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
+          git push
+
+      # ── 8. إخطار بانتهاء كل الأجزاء ─────────────────────────────────────
+      - name: 🎉 Check if All Parts Uploaded
+        if: steps.upload.outputs.remaining_parts == '0'
+        run: |
+          echo "🎉🎉🎉 تم رفع جميع أجزاء الحلقة بنجاح على يوتيوب!"
+          echo "يمكنك إضافة حلقة جديدة إلى Google Drive الآن."

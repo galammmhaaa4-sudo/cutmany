@@ -1,0 +1,81 @@
+name: 🎬 Daily Cartoon Processing
+
+# يشتغل يومياً في الساعة 1 صباحاً (UTC) = 4 صباحاً (توقيت الرياض)
+# يمكن تشغيله يدوياً من خلال GitHub Actions UI
+on:
+  schedule:
+    - cron: "0 1 * * *"   # كل يوم الساعة 1:00 UTC
+  workflow_dispatch:        # تشغيل يدوي
+
+jobs:
+  process-cartoon:
+    name: تنزيل + تقطيع + معالجة
+    runs-on: ubuntu-latest
+    timeout-minutes: 180    # 3 ساعات كحد أقصى
+
+    steps:
+      # ── 1. استنساخ الـ Repository ─────────────────────────────────────────
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 2. تثبيت Python ───────────────────────────────────────────────────
+      - name: 🐍 Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # ── 3. تثبيت ffmpeg ───────────────────────────────────────────────────
+      - name: 🎞️ Install FFmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version | head -1
+
+      # ── 4. تثبيت مكتبات Python ───────────────────────────────────────────
+      - name: 📦 Install Python Dependencies
+        run: pip install -r requirements.txt
+
+      # ── 5. تنزيل الفيديو من Google Drive ─────────────────────────────────
+      - name: 📥 Download Video from Google Drive
+        id: download
+        env:
+          GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          GOOGLE_DRIVE_FOLDER_ID:   ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+        run: python scripts/download_from_drive.py
+
+      # ── 6. التقطيع (إذا وجد فيديو) ───────────────────────────────────────
+      - name: ✂️ Split Video into Parts
+        if: steps.download.outputs.has_video == 'true'
+        run: python scripts/split_video.py
+
+      # ── 7. إضافة Letterbox ────────────────────────────────────────────────
+      - name: 🎨 Add Letterbox & Branding
+        if: steps.download.outputs.has_video == 'true'
+        run: python scripts/add_letterbox.py
+
+      # ── 8. توليد Metadata ─────────────────────────────────────────────────
+      - name: 📝 Generate YouTube Metadata
+        if: steps.download.outputs.has_video == 'true'
+        run: python scripts/generate_metadata.py
+
+      # ── 9. حفظ الأجزاء المعالجة كـ Artifact مؤقتة ───────────────────────
+      - name: 💾 Save Processed Videos as Artifacts
+        if: steps.download.outputs.has_video == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: processed-videos-${{ github.run_id }}
+          path: /tmp/cartoon_processing/branded/
+          retention-days: 7     # تُحفظ لمدة 7 أيام
+
+      # ── 10. حفظ ملف الـ queue ─────────────────────────────────────────────
+      - name: 📋 Commit Updated Queue File
+        if: steps.download.outputs.has_video == 'true'
+        run: |
+          git config --local user.email "bot@cartoon-automation.com"
+          git config --local user.name "Cartoon Bot 🤖"
+          git add queue/upload_queue.json
+          git commit -m "🤖 Updated queue: $(date '+%Y-%m-%d') - New episode processed" || echo "No changes to commit"
+          git push

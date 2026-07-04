@@ -1,0 +1,58 @@
+# ====================================================
+# إعدادات نظام أتمتة قناة الكرتون
+# ====================================================
+
+# معلومات الكرتون (غيّر هذه القيم لكل كرتون جديد)
+cartoon:
+  name: "My Cartoon Show"          # اسم الكرتون
+  episode_number: 1                 # رقم الحلقة الحالية
+  language: "ar"                    # لغة المحتوى (ar = عربي)
+
+# إعدادات التقطيع
+splitting:
+  min_duration: 240                 # أقل مدة للمقطع (4 دقائق = 240 ثانية)
+  max_duration: 300                 # أقصى مدة للمقطع (5 دقائق = 300 ثانية)
+  output_format: "mp4"              # صيغة الإخراج
+
+# إعدادات الـ Letterbox (الشريط العلوي والسفلي)
+letterbox:
+  bar_height: 80                    # ارتفاع الشريط بالبكسل
+  bar_color: "#1a1a2e"              # لون الشريط (أزرق داكن)
+  text_color: "#ffffff"             # لون النص الأبيض
+  text_font_size: 36                # حجم الخط
+  logo_path: "assets/channel_banner.png"  # مسار شعار القناة
+  logo_opacity: 0.9                 # شفافية الشعار (0-1)
+
+# إعدادات يوتيوب
+youtube:
+  category_id: "1"                  # 1 = Film & Animation
+  privacy_status: "public"          # public / private / unlisted
+  tags:
+    - "كرتون"
+    - "cartoon"
+    - "anime"
+    - "animation"
+  upload_interval_hours: 2          # رفع مقطع كل X ساعات
+
+# قوالب العنوان والوصف
+metadata_templates:
+  title: "{cartoon_name} | Episode {episode} - Part {part}"
+  description: |
+    🎬 {cartoon_name} - Episode {episode} | Part {part}
+    
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    📺 شاهد المزيد من حلقات {cartoon_name} على قناتنا!
+    🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    
+    #cartoon #animation #{cartoon_name_tag}
+
+# إعدادات Google Drive
+google_drive:
+  input_folder_name: "youcut"          # اسم مجلد الفيديوهات المدخلة
+  processed_folder_name: "CartoonDone" # اسم مجلد الفيديوهات المعالجة
+  
+# إعدادات العمل
+processing:
+  temp_dir: "/tmp/cartoon_processing"  # مجلد مؤقت للمعالجة
+  cleanup_after_upload: true           # حذف الملفات المؤقتة بعد الرفع
