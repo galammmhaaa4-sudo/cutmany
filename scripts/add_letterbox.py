@@ -69,6 +69,9 @@ def add_letterbox_to_video(
     # نص الجزء
     part_text = f"Part {part_number}"
     
+    # التحقق من وجود الشعار
+    has_logo = os.path.exists(logo_path)
+    
     # التحقق من وجود الخط
     font_opt = f"fontfile='{FONT_PATH}':" if os.path.exists(FONT_PATH) else ""
     
