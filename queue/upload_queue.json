@@ -27,8 +27,8 @@
       "file_path": "/tmp/cartoon_processing/parts/part_02.mp4",
       "start_time": 240,
       "duration": 240,
-      "uploaded": false,
-      "youtube_id": null,
+      "uploaded": true,
+      "youtube_id": "nHenM0mbbqk",
       "branded_file_path": "/tmp/cartoon_processing/branded/branded_part_02.mp4",
       "youtube_title": "My Cartoon Show | Episode 1 - Part 2",
       "youtube_description": "🎬 My Cartoon Show - Episode 1 | Part 2\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📺 شاهد المزيد من حلقات My Cartoon Show على قناتنا!\n🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n#cartoon #animation #my_cartoon_show\n\n\n📋 الحلقة مقسمة إلى 6 أجزاء - تابع الأجزاء الأخرى على القناة!",
@@ -41,7 +41,8 @@
         "episode1"
       ],
       "youtube_category": "1",
-      "privacy_status": "public"
+      "privacy_status": "public",
+      "upload_time": "2026-07-04T02:08:04.508619"
     },
     {
       "part_number": 3,
@@ -128,8 +129,8 @@
       "privacy_status": "public"
     }
   ],
-  "last_updated": "2026-07-04T02:02:54.231738",
-  "total_uploaded": 1,
+  "last_updated": "2026-07-04T02:08:04.508632",
+  "total_uploaded": 2,
   "current_episode": {
     "name": "عالم غامبول المدهش الموسم 2 - الحلقة 2 مدبلجة.mp4",
     "path": "/tmp/cartoon_processing/عالم غامبول المدهش الموسم 2 - الحلقة 2 مدبلجة.mp4",
