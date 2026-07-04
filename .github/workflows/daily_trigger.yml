@@ -12,6 +12,8 @@ jobs:
     name: تنزيل + تقطيع + معالجة
     runs-on: ubuntu-latest
     timeout-minutes: 180    # 3 ساعات كحد أقصى
+    permissions:
+      contents: write
 
     steps:
       # ── 1. استنساخ الـ Repository ─────────────────────────────────────────

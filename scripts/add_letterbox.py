@@ -69,8 +69,8 @@ def add_letterbox_to_video(
     # نص الجزء
     part_text = f"Part {part_number}"
     
-    # التحقق من وجود الشعار
-    has_logo = os.path.exists(logo_path)
+    # التحقق من وجود الخط
+    font_opt = f"fontfile='{FONT_PATH}':" if os.path.exists(FONT_PATH) else ""
     
     if has_logo:
         # Filter مع شعار
@@ -85,7 +85,7 @@ def add_letterbox_to_video(
             f"fontsize={font_size}:"
             f"fontcolor={text_color}:"
             f"x=30:y={bar_h//2 - font_size//2}:"
-            f"fontfile={FONT_PATH if os.path.exists(FONT_PATH) else 'default'}:"
+            f"{font_opt}"
             f"box=0[texted];"
             
             # 3. كتابة اسم القناة على الشريط السفلي
@@ -93,12 +93,12 @@ def add_letterbox_to_video(
             f"text='{cartoon_name}':"
             f"fontsize={font_size - 8}:"
             f"fontcolor={text_color}@0.8:"
-            f"x=(w-text_w)/2:y=ih-{bar_h//2 + font_size//2 - 8}:"
-            f"fontfile={FONT_PATH if os.path.exists(FONT_PATH) else 'default'}[final];"
+            f"x=(w-text_w)/2:y=h-{bar_h//2 + font_size//2 - 8}:"
+            f"{font_opt.replace(':', '')}[final];" # remove trailing colon for last argument if present
             
             # 4. وضع الشعار على الشريط السفلي (يسار)
             f"[1:v]scale=-1:{bar_h - 20}[logo];"
-            f"[final][logo]overlay=x=10:y=ih-{bar_h - 10}[out]"
+            f"[final][logo]overlay=x=10:y=main_h-{bar_h - 10}[out]"
         )
         
         cmd = [
@@ -123,13 +123,16 @@ def add_letterbox_to_video(
             f"text='{part_text}':"
             f"fontsize={font_size}:"
             f"fontcolor={text_color}:"
-            f"x=30:y={bar_h//2 - font_size//2}[texted];"
+            f"x=30:y={bar_h//2 - font_size//2}:"
+            f"{font_opt}"
+            f"box=0[texted];"
             
             f"[texted]drawtext="
             f"text='{cartoon_name}':"
             f"fontsize={font_size - 8}:"
             f"fontcolor={text_color}@0.8:"
-            f"x=(w-text_w)/2:y=ih-{bar_h//2 + font_size//2 - 8}[out]"
+            f"x=(w-text_w)/2:y=h-{bar_h//2 + font_size//2 - 8}:"
+            f"{font_opt.replace(':', '')}[out]"
         )
         
         cmd = [
