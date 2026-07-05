@@ -49,17 +49,29 @@ def split_video(video_path: str, output_dir: str, config: dict) -> list[dict]:
     
     يعيد قائمة بمعلومات كل مقطع.
     """
-    min_dur = config["splitting"]["min_duration"]
-    max_dur = config["splitting"]["max_duration"]
+    video_mode = config.get("video_mode", "long")
     
+    if video_mode == "shorts":
+        target_dur = config["shorts"]["target_duration"]
+        # للفيديوهات القصيرة، نثبت المدة عند القيمة المستهدفة
+        min_dur = target_dur
+        max_dur = target_dur
+    else:
+        min_dur = config["long"]["min_duration"]
+        max_dur = config["long"]["max_duration"]
+        
     total_duration = get_video_duration(video_path)
-    print(f"⏱️  مدة الفيديو الأصلي: {total_duration/60:.1f} دقيقة")
+    print(f"⏱️  مدة الفيديو الأصلي: {total_duration/60:.1f} دقيقة (الوضع: {video_mode})")
     
     # اختيار أفضل مدة للتقطيع
-    segment_duration = choose_best_segment_duration(total_duration, min_dur, max_dur)
+    if video_mode == "shorts":
+        segment_duration = target_dur
+    else:
+        segment_duration = choose_best_segment_duration(total_duration, min_dur, max_dur)
+        
     num_parts = math.ceil(total_duration / segment_duration)
     
-    print(f"✂️  سيتم تقطيعه إلى {num_parts} أجزاء (كل جزء {segment_duration/60:.1f} دقيقة)")
+    print(f"✂️  سيتم تقطيعه إلى {num_parts} أجزاء (كل جزء {segment_duration:.1f} ثانية)")
     
     os.makedirs(output_dir, exist_ok=True)
     parts = []

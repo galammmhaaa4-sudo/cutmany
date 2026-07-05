@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم | Cartoon Automation Dashboard</title>
+  <meta name="description" content="لوحة تحكم نظام أتمتة قناة الكرتون على يوتيوب" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="brand-icon">🎬</div>
+        <div class="brand-text">
+          <span class="brand-title" data-ar="لوحة التحكم" data-en="Dashboard">لوحة التحكم</span>
+          <span class="brand-sub" data-ar="نظام أتمتة قناة الكرتون" data-en="Cartoon Channel Automation">نظام أتمتة قناة الكرتون</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="lang-toggle" class="btn btn-ghost" onclick="toggleLang()">🌐 English</button>
+        <button id="refresh-btn" class="btn btn-primary" onclick="refreshData()">
+          <span class="btn-icon">↻</span>
+          <span data-ar="تحديث" data-en="Refresh">تحديث</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+
+    <!-- ====== STATS CARDS ====== -->
+    <section class="section">
+      <h2 class="section-title" data-ar="📊 الإحصائيات" data-en="📊 Statistics">📊 الإحصائيات</h2>
+      <div class="stats-grid">
+        <div class="stat-card stat-blue">
+          <div class="stat-icon">📤</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-uploaded">0</div>
+            <div class="stat-label" data-ar="مقاطع مرفوعة" data-en="Uploaded Clips">مقاطع مرفوعة</div>
+          </div>
+        </div>
+        <div class="stat-card stat-orange">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-label" data-ar="في الانتظار" data-en="Pending">في الانتظار</div>
+          </div>
+        </div>
+        <div class="stat-card stat-green">
+          <div class="stat-icon">🎬</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-total-parts">0</div>
+            <div class="stat-label" data-ar="إجمالي المقاطع" data-en="Total Parts">إجمالي المقاطع</div>
+          </div>
+        </div>
+        <div class="stat-card stat-purple">
+          <div class="stat-icon">📺</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-cartoon" style="font-size:1rem">—</div>
+            <div class="stat-label" data-ar="الكرتون الحالي" data-en="Current Cartoon">الكرتون الحالي</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-card">
+        <div class="progress-header">
+          <span data-ar="تقدم الرفع" data-en="Upload Progress">تقدم الرفع</span>
+          <span id="progress-text">0 / 0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== QUEUE TABLE ====== -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title" data-ar="📋 قائمة الانتظار" data-en="📋 Upload Queue">📋 قائمة الانتظار</h2>
+        <div class="section-badges">
+          <span class="badge badge-green" id="badge-uploaded">—</span>
+          <span class="badge badge-orange" id="badge-pending">—</span>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table class="queue-table" id="queue-table">
+          <thead>
+            <tr>
+              <th data-ar="الجزء" data-en="Part">#</th>
+              <th data-ar="العنوان" data-en="Title">العنوان</th>
+              <th data-ar="المدة" data-en="Duration">المدة</th>
+              <th data-ar="الحالة" data-en="Status">الحالة</th>
+              <th data-ar="يوتيوب" data-en="YouTube">يوتيوب</th>
+              <th data-ar="وقت الرفع" data-en="Upload Time">وقت الرفع</th>
+            </tr>
+          </thead>
+          <tbody id="queue-tbody">
+            <tr>
+              <td colspan="6" class="empty-state">
+                <div class="empty-icon">📂</div>
+                <div data-ar="استورد ملف upload_queue.json من الزر أسفل الصفحة" data-en="Import upload_queue.json using the button below">استورد ملف upload_queue.json من الزر أسفل الصفحة</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====== GITHUB ACTIONS ====== -->
+    <section class="section">
+      <h2 class="section-title" data-ar="⚡ GitHub Actions" data-en="⚡ GitHub Actions">⚡ GitHub Actions</h2>
+
+      <div class="repo-config">
+        <div class="repo-config-title" data-ar="إعداد الربط مع GitHub" data-en="GitHub Connection Setup">إعداد الربط مع GitHub</div>
+        <div class="repo-input-row">
+          <input type="text" id="repo-input" class="input" placeholder="username/repo-name (مثال: abdullah/haceme)" />
+          <input type="password" id="token-input" class="input" placeholder="GitHub Token (ghp_...)" />
+          <button class="btn btn-primary" onclick="saveRepoConfig()" id="btn-save-repo">
+            <span data-ar="حفظ" data-en="Save">حفظ</span>
+          </button>
+        </div>
+        <p class="field-hint" data-ar="🔒 الـ Token يُحفظ في المتصفح فقط ولا يُرسل لأي خادم." data-en="🔒 Token is stored in browser only, never sent to any server.">🔒 الـ Token يُحفظ في المتصفح فقط ولا يُرسل لأي خادم.</p>
+      </div>
+
+      <div class="actions-grid">
+        <div class="action-card">
+          <div class="action-icon">🔄</div>
+          <div class="action-info">
+            <div class="action-title" data-ar="معالجة يومية" data-en="Daily Processing">معالجة يومية</div>
+            <div class="action-desc" data-ar="تقطيع الفيديوهات وإعدادها للرفع" data-en="Split videos and prepare for upload">تقطيع الفيديوهات وإعدادها للرفع</div>
+            <div class="action-workflow">daily_trigger.yml</div>
+          </div>
+          <button class="btn btn-primary" onclick="triggerWorkflow('daily_trigger')" id="btn-daily">
+            <span>▶</span>
+            <span data-ar="تشغيل" data-en="Run">تشغيل</span>
+          </button>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">📤</div>
+          <div class="action-info">
+            <div class="action-title" data-ar="رفع مقطع" data-en="Upload Clip">رفع مقطع</div>
+            <div class="action-desc" data-ar="رفع المقطع التالي في الانتظار" data-en="Upload the next pending clip">رفع المقطع التالي في الانتظار</div>
+            <div class="action-workflow">upload_scheduler.yml</div>
+          </div>
+          <button class="btn btn-success" onclick="triggerWorkflow('upload_scheduler')" id="btn-upload">
+            <span>▶</span>
+            <span data-ar="تشغيل" data-en="Run">تشغيل</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== CONFIG EDITOR ====== -->
+    <section class="section">
+      <h2 class="section-title" data-ar="⚙️ تعديل الإعدادات" data-en="⚙️ Edit Config">⚙️ تعديل الإعدادات</h2>
+      <div class="config-grid">
+
+        <div class="config-group">
+          <div class="config-group-title" data-ar="🎬 معلومات الكرتون" data-en="🎬 Cartoon Info">🎬 معلومات الكرتون</div>
+          <div class="field-row">
+            <label class="field-label" data-ar="اسم الكرتون" data-en="Cartoon Name">اسم الكرتون</label>
+            <input type="text" id="cfg-cartoon-name" class="input" placeholder="My Cartoon Show" />
+          </div>
+          <div class="field-row">
+            <label class="field-label" data-ar="رقم الحلقة" data-en="Episode Number">رقم الحلقة</label>
+            <input type="number" id="cfg-episode" class="input" placeholder="1" min="1" />
+          </div>
+          <div class="field-row">
+            <label class="field-label" data-ar="اللغة" data-en="Language">اللغة</label>
+            <select id="cfg-language" class="input select">
+              <option value="ar">عربي (ar)</option>
+              <option value="en">English (en)</option>
+              <option value="tr">Türkçe (tr)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="config-group">
+          <div class="config-group-title" data-ar="✂️ نوع وحجم الفيديو" data-en="✂️ Video Mode & Duration">✂️ نوع وحجم الفيديو</div>
+          <div class="field-row">
+            <label class="field-label" data-ar="وضع الفيديو" data-en="Video Mode">وضع الفيديو</label>
+            <select id="cfg-video-mode" class="input select" onchange="toggleModeFields()">
+              <option value="long">فيديو طويل عادي (16:9)</option>
+              <option value="shorts">فيديو قصير (9:16 Shorts)</option>
+            </select>
+          </div>
+          <div class="field-row id-long-field">
+            <label class="field-label" data-ar="أقل مدة (ثانية)" data-en="Min Long Duration">أقل مدة (ثانية)</label>
+            <input type="number" id="cfg-min-dur" class="input" placeholder="240" />
+          </div>
+          <div class="field-row id-long-field">
+            <label class="field-label" data-ar="أقصى مدة (ثانية)" data-en="Max Long Duration">أقصى مدة (ثانية)</label>
+            <input type="number" id="cfg-max-dur" class="input" placeholder="300" />
+          </div>
+          <div class="field-row id-shorts-field" style="display:none">
+            <label class="field-label" data-ar="مدة Shorts (ثانية)" data-en="Shorts Target Duration">مدة Shorts (ثانية)</label>
+            <input type="number" id="cfg-target-dur" class="input" placeholder="50" />
+          </div>
+        </div>
+
+        <div class="config-group">
+          <div class="config-group-title" data-ar="📺 يوتيوب والرفع" data-en="📺 YouTube & Upload">📺 يوتيوب والرفع</div>
+          <div class="field-row">
+            <label class="field-label" data-ar="الرفع كل (ساعات)" data-en="Upload Every (hours)">الرفع كل (ساعات)</label>
+            <input type="number" id="cfg-interval" class="input" placeholder="2" min="1" max="24" />
+          </div>
+          <div class="field-row">
+            <label class="field-label" data-ar="الخصوصية" data-en="Privacy">الخصوصية</label>
+            <select id="cfg-privacy" class="input select">
+              <option value="public">عام (Public)</option>
+              <option value="unlisted">غير مُدرج (Unlisted)</option>
+              <option value="private">خاص (Private)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="config-group">
+          <div class="config-group-title" data-ar="🛡️ تفادي الحقوق والتحسينات" data-en="🛡️ Copyright Bypass & Enhancements">🛡️ تفادي الحقوق والتحسينات</div>
+          <div class="field-row">
+            <label class="field-label" data-ar="سرعة التشغيل" data-en="Speed Multiplier">سرعة التشغيل</label>
+            <input type="number" id="cfg-speed-multiplier" class="input" placeholder="1.04" step="0.01" min="1.0" max="1.5" />
+          </div>
+          <div class="field-row checkbox-row" style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" id="cfg-color-grading" checked />
+            <label for="cfg-color-grading" class="field-label" data-ar="تفعيل فلتر تغيير الألوان" data-en="Enable Color Grading Filter" style="margin:0; cursor:pointer;">تفعيل فلتر تغيير الألوان</label>
+          </div>
+          <div class="field-row checkbox-row" style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+            <input type="checkbox" id="cfg-watermark-enabled" checked />
+            <label for="cfg-watermark-enabled" class="field-label" data-ar="علامة مائية متحركة" data-en="Bouncing Watermark" style="margin:0; cursor:pointer;">علامة مائية متحركة</label>
+          </div>
+          <div class="field-row" style="margin-top:6px;">
+            <label class="field-label" data-ar="نص العلامة المائية" data-en="Watermark Text">نص العلامة المائية</label>
+            <input type="text" id="cfg-watermark-text" class="input" placeholder="youcatubarx" />
+          </div>
+        </div>
+
+        <div class="config-group id-letterbox-group">
+          <div class="config-group-title" data-ar="🖼️ تصميم الأشرطة (Letterbox)" data-en="🖼️ Letterbox Branding">🖼️ تصميم الأشرطة (Letterbox)</div>
+          <div class="field-row">
+            <label class="field-label" data-ar="ارتفاع الشريط (px)" data-en="Bar Height (px)">ارتفاع الشريط (px)</label>
+            <input type="number" id="cfg-bar-height" class="input" placeholder="80" />
+          </div>
+          <div class="field-row">
+            <label class="field-label" data-ar="لون الشريط" data-en="Bar Color">لون الشريط</label>
+            <div class="color-row">
+              <input type="color" id="cfg-bar-color-picker" class="color-picker" value="#1a1a2e" oninput="syncColor(this)" />
+              <input type="text" id="cfg-bar-color" class="input" placeholder="#1a1a2e" oninput="syncPicker(this)" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="config-actions">
+        <button class="btn btn-ghost" onclick="loadConfigDefaults()">
+          <span>↺</span>
+          <span data-ar="إعادة التعيين" data-en="Reset">إعادة التعيين</span>
+        </button>
+        <button class="btn btn-primary" onclick="exportConfig()">
+          <span>💾</span>
+          <span data-ar="تصدير config.yml" data-en="Export config.yml">تصدير config.yml</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ====== UPLOAD LOG ====== -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title" data-ar="📜 سجل العمليات" data-en="📜 Activity Log">📜 سجل العمليات</h2>
+        <button class="btn btn-ghost btn-sm" onclick="clearLog()" id="btn-clear-log">
+          <span data-ar="مسح" data-en="Clear">مسح</span>
+        </button>
+      </div>
+      <div class="log-panel" id="log-panel">
+        <div class="log-entry log-info">
+          <span class="log-time" id="log-initial-time">--:--:--</span>
+          <span class="log-msg" data-ar="جاهز. استورد ملف queue.json أو أدخل بيانات GitHub." data-en="Ready. Import queue.json or enter GitHub credentials.">جاهز. استورد ملف queue.json أو أدخل بيانات GitHub.</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== TOAST ===== -->
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <!-- ===== HIDDEN FILE INPUTS ===== -->
+  <input type="file" id="queue-file-input" accept=".json" style="display:none" onchange="handleQueueFile(event)" />
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <span data-ar="نظام أتمتة قناة الكرتون • مجاني 100%" data-en="Cartoon Channel Automation • 100% Free">نظام أتمتة قناة الكرتون • مجاني 100%</span>
+    <button class="btn btn-ghost btn-sm" onclick="document.getElementById('queue-file-input').click()" id="btn-import-queue">
+      📂 <span data-ar="استيراد queue.json" data-en="Import queue.json">استيراد queue.json</span>
+    </button>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

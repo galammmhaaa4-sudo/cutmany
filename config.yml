@@ -8,13 +8,20 @@ cartoon:
   episode_number: 1                 # رقم الحلقة الحالية
   language: "ar"                    # لغة المحتوى (ar = عربي)
 
-# إعدادات التقطيع
-splitting:
-  min_duration: 240                 # أقل مدة للمقطع (4 دقائق = 240 ثانية)
-  max_duration: 300                 # أقصى مدة للمقطع (5 دقائق = 300 ثانية)
-  output_format: "mp4"              # صيغة الإخراج
+# وضع الفيديو الحالي: 'long' للفيديو العادي (16:9) أو 'shorts' للفيديوهات القصيرة (9:16)
+video_mode: "long"
 
-# إعدادات الـ Letterbox (الشريط العلوي والسفلي)
+# إعدادات الفيديوهات القصيرة (Shorts)
+shorts:
+  target_duration: 50               # المدة المستهدفة بالثواني (أقل من 60 ثانية)
+  background_blur: true             # تفعيل الخلفية الضبابية
+
+# إعدادات الفيديوهات الطويلة (Long)
+long:
+  min_duration: 240                 # الحد الأدنى للمدة بالثواني (4 دقائق)
+  max_duration: 300                 # الحد الأقصى للمدة بالثواني (5 دقائق)
+
+# إعدادات الـ Letterbox (الشريط العلوي والسفلي للوضع الطويل)
 letterbox:
   bar_height: 80                    # ارتفاع الشريط بالبكسل
   bar_color: "#1a1a2e"              # لون الشريط (أزرق داكن)
@@ -22,6 +29,21 @@ letterbox:
   text_font_size: 36                # حجم الخط
   logo_path: "assets/channel_banner.png"  # مسار شعار القناة
   logo_opacity: 0.9                 # شفافية الشعار (0-1)
+
+# إعدادات التحسينات وتجنب حقوق الملكية (Copyright Bypass)
+enhancements:
+  speed_multiplier: 1.04            # تسريع الفيديو والصوت (1.0 للتعطيل)
+  color_grading:
+    enabled: true                   # تعديل خفيف للألوان لتغيير البصمة الرقمية للـ Content ID
+    brightness: 0.02                # تعديل الإضاءة (-1.0 إلى 1.0)
+    contrast: 1.03                  # تعديل التباين
+  watermark:
+    enabled: true                   # علامة مائية متحركة لحماية المحتوى
+    text: "youcatubarx"             # النص المعروض في العلامة المائية
+    font_size: 24
+    opacity: 0.5                    # الشفافية
+    speed_x: 80                     # السرعة الأفقية (بكسل/ثانية)
+    speed_y: 40                     # السرعة الرأسية
 
 # إعدادات يوتيوب
 youtube:
