@@ -5,9 +5,9 @@
       "file_path": "/tmp/cartoon_processing/parts/part_01.mp4",
       "start_time": 0,
       "duration": 240,
-      "uploaded": true,
-      "youtube_id": "Cw03zEMeo_M",
-      "branded_file_path": "/tmp/cartoon_processing/branded/branded_part_01.mp4",
+      "uploaded": false,
+      "youtube_id": null,
+      "branded_file_path": "/tmp/cartoon_processing/parts/part_01.mp4",
       "youtube_title": "My Cartoon Show | Episode 1 - Part 1",
       "youtube_description": "🎬 My Cartoon Show - Episode 1 | Part 1\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📺 شاهد المزيد من حلقات My Cartoon Show على قناتنا!\n🔔 اشترك في القناة وفعّل زر الجرس لتصلك كل الحلقات الجديدة\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n#cartoon #animation #my_cartoon_show\n",
       "youtube_tags": [
@@ -19,11 +19,10 @@
         "episode1"
       ],
       "youtube_category": "1",
-      "privacy_status": "public",
-      "upload_time": "2026-07-05T19:02:06.917523"
+      "privacy_status": "public"
     }
   ],
-  "last_updated": "2026-07-05T19:02:06.917537",
+  "last_updated": "2026-07-06T05:06:08.367798",
   "total_uploaded": 1,
   "current_episode": {
     "name": "VID_٢٠٢٦٠٧٠٤_٠٦٢٩٢٨.mp4",
